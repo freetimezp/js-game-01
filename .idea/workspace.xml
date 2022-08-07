@@ -20,17 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b1e0067-73da-4a28-af96-647c0df4e367" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/images/bg/layer1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/bg/layer2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/bg/layer3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/bg/layer4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/effects/fireExplosion.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/effects/lucky.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/effects/smokeExplosion.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/enemies/angler1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/enemies/angler2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/enemies/drone.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/enemies/hivewhale.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/player/gears.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/player/player.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/player/projectile.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/style.css" afterDir="false" />
@@ -76,7 +68,7 @@
       <updated>1659792609376</updated>
       <workItem from="1659792610525" duration="825000" />
       <workItem from="1659794357094" duration="6924000" />
-      <workItem from="1659868648269" duration="7884000" />
+      <workItem from="1659868648269" duration="9229000" />
     </task>
     <servers />
   </component>
