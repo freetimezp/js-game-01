@@ -39,6 +39,7 @@ window.addEventListener('load', function () {
             this.height = 3;
             this.speed = 3;
             this.markedForDeletion = false;
+            this.image = document.getElementById('projectile');
         }
 
         update() {
@@ -49,8 +50,7 @@ window.addEventListener('load', function () {
             }
         }
         draw(context) {
-            context.fillStyle = 'yellow';
-            context.fillRect(this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.x, this.y);
         }
     }
 
@@ -86,6 +86,13 @@ window.addEventListener('load', function () {
                 this.speedY = 0;
             }
             this.y += this.speedY;
+
+            //vertical fix player move above the screen
+            if(this.y > this.game.height - this.height * 0.5) {
+                this.y = this.game.height - this.height * 0.5;
+            }else if(this.y < -this.height * 0.5) {
+                this.y = -this.height * 0.5;
+            }
 
             //handle projectiles
             this.projectiles.forEach(projectile => {
@@ -179,9 +186,13 @@ window.addEventListener('load', function () {
                 context.strokeRect(this.x, this.y, this.width, this.height);
             }
 
-            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
-            context.font = '20px Helvetica';
-            context.fillText(this.lives, this.x, this.y);
+            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height,
+                this.x, this.y, this.width, this.height);
+
+            if(this.game.debug) {
+                context.font = '20px Helvetica';
+                context.fillText(this.lives, this.x, this.y);
+            }
         }
     }
 
@@ -275,7 +286,7 @@ window.addEventListener('load', function () {
         constructor(game) {
             this.game = game;
             this.fontSize = 20;
-            this.fontFamily = 'Helvetica';
+            this.fontFamily = 'Bangers';
             this.color = 'white';
         }
 
@@ -309,9 +320,9 @@ window.addEventListener('load', function () {
                 }
 
                 context.font = '50px ' + this.fontFamily;
-                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 30);
+                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 20);
                 context.font = '25px ' + this.fontFamily;
-                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 30);
+                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 20);
             }
 
             //ammo
@@ -348,7 +359,7 @@ window.addEventListener('load', function () {
             this.gameTime = 0;
             this.timeLimit = 50000;
             this.speed = 1;
-            this.debug = true;
+            this.debug = false;
         }
 
         update(deltaTime) {
