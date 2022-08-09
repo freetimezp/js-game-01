@@ -358,6 +358,56 @@ window.addEventListener('load', function () {
         }
     }
 
+    class Explosion {
+        constructor(game, x, y) {
+            this.game = game;
+            this.frameX = 0;
+            this.spriteWidth = 200;
+            this.spriteHeight = 200;
+            this.width = this.spriteWidth;
+            this.height = this.spriteHeight;
+            this.x = x - this.width * 0.5;
+            this.y = y - this.height * 0.5;
+            this.fps = 30;
+            this.timer = 0;
+            this.interval = 1000 / this.fps;
+            this.markedForDeletion = false;
+            this.maxFrame = 8;
+        }
+
+        update(deltaTime) {
+            this.x -= this.game.speed;
+            if(this.timer > this.interval) {
+                this.frameX++;
+                this.timer = 0;
+            }else{
+                this.timer += deltaTime;
+            }
+
+            if(this.frameX > this.maxFrame) {
+                this.markedForDeletion = true;
+            }
+        }
+        draw(context) {
+            context.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight,
+                this.x + this.width * 0.5, this.y + this.height * 0.5, this.width, this.height);
+        }
+    }
+
+    class SmokeExplosion extends Explosion {
+        constructor(game, x, y) {
+            super(game, x, y);
+            this.image = document.getElementById('smokeExplosion');
+        }
+    }
+
+    class FireExplosion extends Explosion {
+        constructor(game, x, y) {
+            super(game, x, y);
+            this.image = document.getElementById('fireExplosion');
+        }
+    }
+
     class UI {
         constructor(game) {
             this.game = game;
@@ -424,6 +474,7 @@ window.addEventListener('load', function () {
             this.keys = [];
             this.enemies = [];
             this.perticles = [];
+            this.explosions = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.ammo = 30;
@@ -463,11 +514,14 @@ window.addEventListener('load', function () {
             this.perticles.forEach(particle => particle.update());
             this.perticles = this.perticles.filter(particle => !particle.markedForDeletion);
 
+            this.explosions.forEach(explosion => explosion.update(deltaTime));
+            this.explosions = this.explosions.filter(explosion => !explosion.markedForDeletion);
+
             this.enemies.forEach(enemy => {
                 enemy.update();
                 if(this.checkCollision(this.player, enemy)) {
                     enemy.markedForDeletion = true;
-
+                    this.addExplosion(enemy);
                     for(let i = 0; i < enemy.score; i++) {
                         this.perticles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
@@ -491,6 +545,7 @@ window.addEventListener('load', function () {
                                 this.perticles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
+                            this.addExplosion(enemy);
 
                             if(enemy.type === 'hive') {
                                 for(let i = 0; i < 5; i++) {
@@ -524,6 +579,7 @@ window.addEventListener('load', function () {
             this.player.draw(context);
 
             this.perticles.forEach(particle => particle.draw(context));
+            this.explosions.forEach(explosion => explosion.draw(context));
 
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
@@ -546,6 +602,16 @@ window.addEventListener('load', function () {
 
         }
 
+        addExplosion(enemy) {
+            const randomize = Math.random();
+
+            if(randomize < 0.5) {
+                this.explosions.push(new SmokeExplosion(this, enemy.x, enemy.y));
+            }else{
+                this.explosions.push(new FireExplosion(this, enemy.x, enemy.y));
+            }
+        }
+
         checkCollision(rect1, rect2) {
             return (    rect1.x < rect2.x + rect2.width &&
                         rect1.x + rect1.width > rect2.x &&
@@ -564,8 +630,8 @@ window.addEventListener('load', function () {
         lastTime = timeStamp;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        game.update(deltaTime);
         game.draw(ctx);
+        game.update(deltaTime);
 
         requestAnimationFrame(animate);
     }
