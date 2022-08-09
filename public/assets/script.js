@@ -476,14 +476,14 @@ window.addEventListener('load', function () {
             this.perticles = [];
             this.explosions = [];
             this.enemyTimer = 0;
-            this.enemyInterval = 1000;
-            this.ammo = 30;
-            this.maxAmmo = 100;
+            this.enemyInterval = 2000;
+            this.ammo = 40;
+            this.maxAmmo = 150;
             this.ammoTimer = 0;
-            this.ammoInterval = 500;
+            this.ammoInterval = 350;
             this.gameOver = false;
             this.score = 0;
-            this.winningScore = 50;
+            this.winningScore = 100;
             this.gameTime = 0;
             this.timeLimit = 50000;
             this.speed = 1;
@@ -529,7 +529,7 @@ window.addEventListener('load', function () {
                     if(enemy.type === 'lucky') {
                         this.player.enterPowerUp();
                     }
-                    else {
+                    else if(!this.gameOver) {
                         this.score--;
                     }
                 }
@@ -592,11 +592,11 @@ window.addEventListener('load', function () {
             const randomize = Math.random();
             if(randomize < 0.4) {
                 this.enemies.push(new Angler1(this));
-            }else if(randomize < 0.9 && randomize >= 0.4) {
+            }else if(randomize < 0.7 && randomize >= 0.4) {
                 this.enemies.push(new Angler2(this));
-            }else if(randomize >= 0.7) {
+            }else if(randomize >= 0.8 && randomize < 0.9) {
                 this.enemies.push(new HiveWhale(this));
-            }else{
+            }else if(randomize >= 0.9) {
                 this.enemies.push(new LuckyFish(this));
             }
 
